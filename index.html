@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPrescriptionPal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafb;
+            color: #1a2b3c;
+            line-height: 1.65;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 48px 24px 40px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .app-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #0a84ff, #30d158);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(10, 132, 255, 0.2);
+        }
+
+        .app-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .app-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 36px;
+            background: #e9eef3;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            color: #5a6a7a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab:hover {
+            color: #1a2b3c;
+        }
+
+        .tab.active {
+            background: white;
+            color: #1a2b3c;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Content panels */
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Shared typography */
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 32px;
+            color: #1a2b3c;
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        p {
+            color: #3a4a5a;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        a {
+            color: #0a84ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Support-specific */
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item strong {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: #1a2b3c;
+            font-size: 15px;
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e2e8ee;
+            margin: 32px 0;
+        }
+
+        .contact-card {
+            background: white;
+            border: 1px solid #e2e8ee;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .contact-card h2 {
+            margin-top: 0;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0a84ff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 10px 20px;
+            background: #f0f7ff;
+            border-radius: 8px;
+            transition: background 0.15s ease;
+        }
+
+        .contact-link:hover {
+            background: #e0efff;
+            text-decoration: none;
+        }
+
+        /* Privacy-specific */
+        .updated {
+            color: #8a9aaa;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .privacy-section h2 {
+            margin-top: 28px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: #8a9aaa;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 32px 20px 32px; }
+            .app-header h1 { font-size: 20px; }
+            .tab { font-size: 14px; padding: 9px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-header">
+            <div class="app-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-1 10h-4v4h-4v-4H6v-2h4V7h4v4h4z"/>
+                </svg>
+            </div>
+            <h1>MyPrescriptionPal</h1>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('support')">Support</button>
+            <button class="tab" onclick="switchTab('privacy')">Privacy Policy</button>
+        </div>
+
+        <!-- Support Panel -->
+        <div id="support" class="panel active">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <strong>Does MyPrescriptionPal collect my data?</strong>
+                <p>No. The app runs entirely on your device. Your photos and prescription information are never sent to any server, stored externally, or shared with anyone — including us.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>Why can't the app read my prescription label?</strong>
+                <p>For best results, hold your phone steady in good lighting and make sure the full label is visible. Try taking the photo from a few different angles. The app works best with clearly printed text on flat surfaces.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>What devices are supported?</strong>
+                <p>MyPrescriptionPal requires an iPhone or iPad running iOS 16 or later.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>Is the app free?</strong>
+                <p>Yes, MyPrescriptionPal is completely free to use with no in-app purchases or subscriptions.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="contact-card">
+                <h2>Still need help?</h2>
+                <p>If you have a question, found a bug, or want to request a feature, reach out and we'll get back to you as soon as we can.</p>
+                <a href="mailto:derekebowman1@outlook.com" class="contact-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    derekebowman1@outlook.com
+                </a>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Panel -->
+        <div id="privacy" class="panel">
+            <p class="updated">Last updated: April 14, 2026</p>
+
+            <div class="privacy-section">
+                <h2>Overview</h2>
+                <p>MyPrescriptionPal is designed with your privacy in mind. We do not collect, store, or transmit any of your personal or health data. All information you enter into the app stays on your device.</p>
+
+                <h2>Data Storage</h2>
+                <p>All data, including your medication schedules, is stored locally on your device. None of your data is sent to any external server, cloud service, or third party. We have no ability to access, view, or retrieve your data.</p>
+
+                <h2>Data Collection</h2>
+                <p>We do not collect any personal information, health information, usage analytics, or tracking data of any kind.</p>
+
+                <h2>PDF Export</h2>
+                <p>The app allows you to export your medication schedule as a PDF. This file is generated locally on your device. We do not receive a copy of any exported files.</p>
+
+                <h2>Third-Party Services</h2>
+                <p>The app does not integrate with or send data to any third-party services, advertising networks, or analytics platforms.</p>
+
+                <h2>Changes to This Policy</h2>
+                <p>If we make changes to this privacy policy, the updated version will be posted on this page with a revised date.</p>
+
+                <h2>Contact</h2>
+                <p>If you have any questions about this privacy policy, you can reach us at <a href="mailto:derekebowman1@outlook.com">derekebowman1@outlook.com</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 MyPrescriptionPal. All rights reserved.
+    </footer>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+
+        // Allow linking directly to a tab via hash
+        if (window.location.hash === '#privacy') switchTab('privacy');
+        if (window.location.hash === '#support') switchTab('support');
+    </script>
+</body>
+</html>
